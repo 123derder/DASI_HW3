@@ -84,10 +84,15 @@ if __name__ == "__main__":
     output_data=[]
     for i in range(0,24):
         last_time=(datetime.datetime.strptime(last_time, "%Y-%m-%d %H:%M:%S") + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S")
+        if values[i]<0:
+            values[i]=-values[i]
+        
         if times[i] > 2:
             output_data.append([last_time,"sell",0.01,values[i]])
         if times[i] == 0:
-            output_data.append([last_time,"buy",2.52,-values[i]])
+            output_data.append([last_time,"buy",2.52,values[i]])
+        if times[i] <= 2:
+            output_data.append([last_time,"sell",2.53,math.floor((1000+values[i])*100)/100])
             # if 0 < times[i] and times[i] <7:
             #     writer.writerow({"time":last_time, "action":"sell","target_price":0.01,"target_volume":0.1,"times":times[i]})
 
